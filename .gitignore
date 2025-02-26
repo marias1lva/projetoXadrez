@@ -1,0 +1,75 @@
+# Diretórios do Visual Studio
+.vs/
+*.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Binários e saídas de build
+bin/
+obj/
+out/
+debug/
+release/
+
+# Dependências geradas pelo NuGet
+packages/
+*.nupkg
+project.lock.json
+project.assets.json
+PackageRestore
+
+# Configurações específicas de usuário
+*.psess
+*.psesswpf
+*.tss
+
+# Arquivos de log e cache
+*.log
+*.cache
+*.env
+*.pdb
+*.ipch
+*.ilk
+
+# Arquivos de publicação e deploy
+publish/
+app.publish/
+*.Publish.xml
+
+# Configurações do Rider/JetBrains
+.idea/
+*.dotCover
+*.sln.iml
+
+# Arquivos do SQL Server
+*.mdf
+*.ldf
+
+# Arquivos do Docker
+**/docker-compose.override.yml
+**/docker-compose.*.yml
+
+# Configuração específica para Windows
+Thumbs.db
+Desktop.ini
+
+# Ignorar DLLs e EXEs gerados
+*.dll
+*.exe
+*.pdb
+*.appx
+*.appxbundle
+
+# Arquivos gerados pelo Test Explorer do Visual Studio
+TestResults/
+*.vspx
+*.vspf
+*.vspd
+*.vspdconfig
+
+# Arquivos temporários do Visual Studio Code
+*.code-workspace
+.history/
+*.log
