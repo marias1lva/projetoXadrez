@@ -29,16 +29,14 @@ namespace Xadrez {
                         partida.validarPosicaoDeDestino(origem, destino); // Vai validar a posição de destino
 
                         partida.realizaJogada(origem, destino);
-                    }
-                    catch (TabuleiroException e) {
+                    } catch (TabuleiroException e) {
                         Console.WriteLine(e.Message);
                         Console.ReadLine();
                     }
                 }
                 Console.Clear();
                 Tela.imprimirPartida(partida);
-            }
-            catch (TabuleiroException e) {
+            } catch (TabuleiroException e) {
                 Console.WriteLine(e.Message);
             }
         }

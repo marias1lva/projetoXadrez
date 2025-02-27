@@ -65,8 +65,7 @@ namespace Xadrez {
                 for (int j = 0; j < tab.colunas; j++) {
                     if (posicoesPossiveis[i, j]) {
                         Console.BackgroundColor = fundoAlterado;
-                    }
-                    else {
+                    } else {
                         Console.BackgroundColor = fundoOriginal;
                     }
                     imprimirPeca(tab.peca(i, j));
@@ -90,12 +89,10 @@ namespace Xadrez {
 
             if (peca == null) {
                 Console.Write("- ");
-            }
-            else {
+            } else {
                 if (peca.cor == Cor.Branca) {
                     Console.Write(peca);
-                }
-                else {
+                } else {
                     ConsoleColor aux = Console.ForegroundColor; // Salva a cor atual do console
                     Console.ForegroundColor = ConsoleColor.Yellow; // Muda a cor do texto para amarelo
                     Console.Write(peca); // Imprime a peça
