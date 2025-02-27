@@ -1,5 +1,5 @@
 ﻿namespace tabuleiro {
-    class Peca {
+    abstract class Peca { // Se a classe tem pelo menos um método abstrato, ela deve ser abstrata
         public Posicao posicao { get; set; }
 
         public Cor cor { get; protected set; }
@@ -15,9 +15,11 @@
             this.qteMovimentos = 0;
         }
 
+        public abstract bool[,] movimentosPossiveis();
+
         public void incrementarQteMovimentos() {
             qteMovimentos++;
-        }
+        } 
 
     }
 }
