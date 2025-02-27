@@ -35,7 +35,7 @@
             return false;
         }
 
-        public bool podeMoverPara(Posicao pos) { // Verifica se a peça pode mover para uma determinada posição, se essa posição é um dos movimentos possíveis dela
+        public bool movimentoPossivel(Posicao pos) { // Verifica se a peça pode mover para uma determinada posição, se essa posição é um dos movimentos possíveis dela
             return movimentosPossiveis()[pos.linha, pos.coluna]; 
         }
 
