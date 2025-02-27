@@ -59,8 +59,12 @@ namespace xadrez {
                 xeque = false;
             }
 
-            turno++;
-            mudaJogador();
+            if (testeXequemate(adversaria(jogadorAtual))) {
+                terminada = true;
+            } else {
+                turno++;
+                mudaJogador();
+            }
         }
 
         public void validarPosicaoDeOrigem(Posicao pos) {
@@ -141,12 +145,36 @@ namespace xadrez {
             return false; // O Rei da cor passada como parâmetro não está em xeque
         }
 
+        public bool testeXequemate(Cor cor) {
+            if (!estaEmXeque(cor)) { // Se a cor passada como parâmetro não está em xeque
+                return false; // Não é xeque-mate
+            }
+            foreach (Peca x in pecasEmJogo(cor)) {
+                bool[,] mat = x.movimentosPossiveis(); // Pega a matriz de movimentos possíveis da peça x
+                for (int i = 0; i < tab.linhas; i++) {
+                    for (int j = 0; j < tab.colunas; j++) {
+                        if (mat[i, j]) { // Se a matriz de movimentos possíveis da peça x tem um movimento possível
+                            Posicao origem = x.posicao; // Pega a posição da peça x
+                            Posicao destino = new Posicao(i, j);
+                            Peca pecaCapturada = executaMovimento(origem, destino); // Executa o movimento da peça x para a posição i, j
+                            bool testeXeque = estaEmXeque(cor); // Testa se a cor passada como parâmetro está em xeque
+                            desfazMovimento(origem, destino, pecaCapturada); // Desfaz o movimento da peça x para a posição i, j
+                            if (!testeXeque) { // Se a cor passada como parâmetro não está em xeque
+                                return false; // Não é xeque-mate
+                            }
+                        }
+                    }
+                }
+            }
+            return true; // É xeque-mate
+        }
+
         public void colocarNovaPeca(char coluna, int linha, Peca peca) { 
             tab.colocarPeca(peca, new PosicaoXadrez(coluna, linha).toPosicao()); // Dado uma coluna, uma linha e uma peça, eu vou no tabuleiro da partida e coloco
             pecas.Add(peca); // Adiciono a peça no conjunto de peças
         }
 
-        private void colocarPecas() {
+        /*private void colocarPecas() {
             colocarNovaPeca('c', 1, new Torre(tab, Cor.Branca));
             colocarNovaPeca('c', 2, new Torre(tab, Cor.Branca));
             colocarNovaPeca('d', 2, new Torre(tab, Cor.Branca));
@@ -161,6 +189,15 @@ namespace xadrez {
             colocarNovaPeca('e', 8, new Torre(tab, Cor.Preta));
             colocarNovaPeca('d', 8, new Rei(tab, Cor.Preta));
 
+        }*/
+
+        private void colocarPecas() {
+            colocarNovaPeca('c', 1, new Torre(tab, Cor.Branca));
+            colocarNovaPeca('d', 1, new Rei(tab, Cor.Branca));
+            colocarNovaPeca('h', 7, new Torre(tab, Cor.Branca));
+
+            colocarNovaPeca('a', 8, new Rei(tab, Cor.Preta));
+            colocarNovaPeca('b', 8, new Torre(tab, Cor.Preta));
         }
     }
 }
