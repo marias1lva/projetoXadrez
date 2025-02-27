@@ -19,6 +19,10 @@
             qteMovimentos++;
         }
 
+        public void decrementarQteMovimentos() {
+            qteMovimentos--;
+        }
+
         public bool existeMovimentosPossiveis() { // Verifica se na matriz de movimentos possíveis existe pelo menos um valor verdadeiro (movimento possível)
             bool[,] mat = movimentosPossiveis();
             for (int i = 0; i < tab.linhas; i++) {

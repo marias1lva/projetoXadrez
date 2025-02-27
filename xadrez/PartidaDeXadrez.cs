@@ -9,21 +9,22 @@ namespace xadrez {
         public int turno { get; private set; }
         public Cor jogadorAtual { get; private set; }
         public bool terminada { get; private set; }
-
         private HashSet<Peca> pecas;
         private HashSet<Peca> capturadas;
+        public bool xeque { get; private set; }
 
         public PartidaDeXadrez() {
             tab = new Tabuleiro(8, 8);
             turno = 1;
             jogadorAtual = Cor.Branca;
             terminada = false;
+            xeque = false;
             pecas = new HashSet<Peca>();
             capturadas = new HashSet<Peca>();
             colocarPecas();
         }
 
-        public void executaMovimento(Posicao origem, Posicao destino) {
+        public Peca executaMovimento(Posicao origem, Posicao destino) {
             Peca p = tab.retirarPeca(origem);
             p.incrementarQteMovimentos();
             Peca pecaCapturada = tab.retirarPeca(destino);
@@ -31,10 +32,33 @@ namespace xadrez {
             if (pecaCapturada != null) {
                 capturadas.Add(pecaCapturada);
             }
+            return pecaCapturada;
+        }
+
+        public void desfazMovimento(Posicao origem, Posicao destino, Peca pecaCapturada) {
+            Peca p = tab.retirarPeca(destino);
+            p.decrementarQteMovimentos();
+            if (pecaCapturada != null) {
+                tab.colocarPeca(pecaCapturada, destino);
+                capturadas.Remove(pecaCapturada);
+            }
+            tab.colocarPeca(p, origem);
         }
 
         public void realizaJogada(Posicao origem, Posicao destino) {
-            executaMovimento(origem, destino);
+            Peca pecaCapturada = executaMovimento(origem, destino);
+
+            if(estaEmXeque(jogadorAtual)) {
+                desfazMovimento(origem, destino, pecaCapturada);
+                throw new TabuleiroException("Você não pode se colocar em xeque!");
+            }
+
+            if (estaEmXeque(adversaria(jogadorAtual))) {
+                xeque = true;
+            } else {
+                xeque = false;
+            }
+
             turno++;
             mudaJogador();
         }
@@ -84,6 +108,37 @@ namespace xadrez {
             }
             aux.ExceptWith(pecasCapturadas(cor)); // Remove do conjunto aux as peças capturadas da cor passada como parâmetro
             return aux;
+        }
+
+        private Cor adversaria(Cor cor) {
+            if (cor == Cor.Branca) { // Se a cor passada como parâmetro for branca, a cor adversária é preta
+                return Cor.Preta;
+            } else { // Se a cor passada como parâmetro for preta, a cor adversária é branca
+                return Cor.Branca;
+            }
+        }
+
+        private Peca rei(Cor cor) {
+            foreach (Peca x in pecasEmJogo(cor)) { // Percorre todas as peças x no conjunto de peças em jogo da cor passada como parâmetro
+                if (x is Rei) { // Se a peça x for um Rei, ela é retornada
+                    return x;
+                }
+            }
+            return null;
+        }
+
+        public bool estaEmXeque(Cor cor) {
+            Peca R = rei(cor); // Pega o Rei da cor passada como parâmetro
+            if (R == null) { // Se não existe Rei da cor passada como parâmetro
+                throw new TabuleiroException("Não tem Rei da cor " + cor + " no tabuleiro!");
+            }
+            foreach (Peca x in pecasEmJogo(adversaria(cor))) { // Percorre todas as peças x no conjunto de peças em jogo da cor adversária
+                bool[,] mat = x.movimentosPossiveis(); // Pega a matriz de movimentos possíveis da peça x
+                if (mat[R.posicao.linha, R.posicao.coluna]) { // Se a matriz de movimentos possíveis da peça x tem a posição do Rei da cor passada como parâmetro
+                    return true; // O Rei da cor passada como parâmetro está em xeque
+                }
+            }
+            return false; // O Rei da cor passada como parâmetro não está em xeque
         }
 
         public void colocarNovaPeca(char coluna, int linha, Peca peca) { 
