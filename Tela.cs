@@ -1,9 +1,39 @@
 ﻿using System;
+using System.Collections.Generic;
 using tabuleiro;
 using xadrez;
 
 namespace Xadrez {
     class Tela {
+
+        public static void imprimirPartida(PartidaDeXadrez partida) {
+            imprimirTabuleiro(partida.tab);
+            Console.WriteLine();
+            imprimirPecasCapturadas(partida);
+            Console.WriteLine();
+            Console.WriteLine("Turno: " + partida.turno);
+            Console.WriteLine("Aguardando jogada: " + partida.jogadorAtual);
+        }
+
+        public static void imprimirPecasCapturadas(PartidaDeXadrez partida) {
+            Console.WriteLine("Peças capturadas:");
+            Console.Write("Brancas: ");
+            imprimirConjunto(partida.pecasCapturadas(Cor.Branca));
+            Console.Write("Pretas: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            imprimirConjunto(partida.pecasCapturadas(Cor.Preta));
+            Console.ForegroundColor = aux;
+        }
+
+        public static void imprimirConjunto(HashSet<Peca> conjunto) {
+            Console.Write("[");
+            foreach (Peca x in conjunto) {
+                Console.Write(x + " ");
+            }
+            Console.WriteLine("]");
+        }
+
         public static void imprimirTabuleiro(Tabuleiro tab) {
             for (int i = 0; i < tab.linhas; i++) {
                 Console.Write(8 - i + " |");
@@ -26,7 +56,8 @@ namespace Xadrez {
                 for (int j = 0; j < tab.colunas; j++) {
                     if (posicoesPossiveis[i, j]) {
                         Console.BackgroundColor = fundoAlterado;
-                    } else {
+                    }
+                    else {
                         Console.BackgroundColor = fundoOriginal;
                     }
                     imprimirPeca(tab.peca(i, j));
@@ -50,14 +81,16 @@ namespace Xadrez {
 
             if (peca == null) {
                 Console.Write("- ");
-            } else {
-                  if (peca.cor == Cor.Branca) {
-                      Console.Write(peca);
-                } else {
-                      ConsoleColor aux = Console.ForegroundColor; // Salva a cor atual do console
-                      Console.ForegroundColor = ConsoleColor.Yellow; // Muda a cor do texto para amarelo
-                      Console.Write(peca); // Imprime a peça
-                      Console.ForegroundColor = aux; // Restaura a cor original do console
+            }
+            else {
+                if (peca.cor == Cor.Branca) {
+                    Console.Write(peca);
+                }
+                else {
+                    ConsoleColor aux = Console.ForegroundColor; // Salva a cor atual do console
+                    Console.ForegroundColor = ConsoleColor.Yellow; // Muda a cor do texto para amarelo
+                    Console.Write(peca); // Imprime a peça
+                    Console.ForegroundColor = aux; // Restaura a cor original do console
                 }
                 Console.Write(" ");
             }

@@ -11,24 +11,17 @@ namespace Xadrez {
                 while (!partida.terminada) {
                     try {
                         Console.Clear();
-                        Tela.imprimirTabuleiro(partida.tab);
-                        Console.WriteLine();
-                        Console.WriteLine("Turno: " + partida.turno);
-                        Console.WriteLine("Aguardando jogada: " + partida.jogadorAtual);
+                        Tela.imprimirPartida(partida);
 
                         Console.WriteLine();
                         Console.Write("Origem: ");
                         Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
-
                         partida.validarPosicaoDeOrigem(origem); // Vai validar a posição de origem
 
                         bool[,] posicoesPossiveis = partida.tab.peca(origem).movimentosPossiveis(); // A partir da posição de origem, vou acessar a peça da posição de origem, vou pegar os movimentos possíveis dela e guardar na matriz posicoesPossiveis
 
                         Console.Clear();
                         Tela.imprimirTabuleiro(partida.tab, posicoesPossiveis);
-                        Console.WriteLine();
-                        Console.WriteLine("Turno: " + partida.turno);
-                        Console.WriteLine("Aguardando jogada: " + partida.jogadorAtual);
 
                         Console.WriteLine();
                         Console.Write("Destino: ");
