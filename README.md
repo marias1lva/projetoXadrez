@@ -39,14 +39,77 @@ git clone https://github.com/marias1lva/projetoXadrez.git
 3. Compile e execute o programa;
 4. Siga as instruções no terminal para jogar.
 
-Exemplo de Uso
+## Exemplo de Execução
 
-O jogo inicia exibindo o tabuleiro e solicitando que o jogador escolha a peça que deseja mover, informando a posição de origem e destino.
+- O jogo inicia exibindo o tabuleiro e solicitando que o jogador escolha a peça que deseja mover, informando a posição de origem, clicando enter e informando o destino.
 ```bash
-Turno 1 - Jogador: Branco
+Posição inicial do tabuleiro:             
+8 |T C B D R B C T
+7 |P P P P P P P P
+6 |- - - - - - - -
+5 |- - - - - - - -
+4 |- - - - - - - -
+3 |- - - - - - - -
+2 |P P P P P P P P
+1 |T C B D R B C T
+   ---------------
+   a b c d e f g h
+
+Peças capturadas:
+Brancas: []
+Pretas: []
+
+Turno: 1
+Aguardando jogada: Branca
+
 Origem: e2
+(Enter)
 Destino: e4
+
+
+Tabuleiro após entrada do usuário:
+
+8 |T C B D R B C T
+7 |P P P P P P P P
+6 |- - - - - - - -
+5 |- - - - - - - -
+4 |- - - - P - - -
+3 |- - - - - - - -
+2 |P P P P - P P P
+1 |T C B D R B C T
+   ---------------
+   a b c d e f g h
+
+Peças capturadas:
+Brancas: []
+Pretas: []
+
+Turno: 2
+Aguardando jogada: Preta
+
+Origem: 
+(Enter)
+Destino: 
 ```
+- ### Comandos do usuário:
+  - Para fazer um movimento, digite as coordenadas de origem e destino, primeiro é exibida a `Origem` no terminal, e em seguida o `Destino`;
+  - **Notação suportada**: a1-h8;
+  - **Exemplo**:
+```bash
+   Origem: e2
+   Destino: e4 (move um peão da casa e2 para a casa e4)
+```
+
+## Mensagens de Erro
+- **"Já existe uma peça nessa posição!"** → O jogador tentou mover uma peça para uma casa já ocupada por outra peça da mesma cor. No xadrez, você não pode capturar suas próprias peças.
+- **"Posição inválida!"** → A coordenada inserida está fora do tabuleiro (exemplo: i5 ou a0), ou não segue o formato correto.
+- **"Você não pode se colocar em xeque!"** → A jogada feita deixaria o próprio rei em xeque, o que é proibido pelas regras do xadrez.
+- **"Não existe peça na posição de origem escolhida!"** → O jogador tentou mover uma peça a partir de uma casa vazia. Isso pode ocorrer ao digitar uma coordenada errada.
+- **"A peça de origem escolhida não é sua!"** → O jogador tentou mover uma peça do adversário. No xadrez, você só pode jogar com suas próprias peças.
+- **"Não há movimentos possíveis para a peça de origem escolhida!"** → O jogador escolheu uma peça que, devido às regras do jogo ou ao bloqueio por outras peças, não tem movimentos legais disponíveis.
+- **"Posição de destino inválida!"** → A peça selecionada não pode se mover para a posição de destino informada, pois não obedece às regras de movimentação do xadrez.
+- **"Não tem Rei da cor (branca ou preta) no tabuleiro!"** → O jogo detectou que um dos reis não está no tabuleiro, o que pode indicar um erro no estado da partida ou um problema na implementação da captura do rei.
+
 
 ## Contribuições
 Sinta-se à vontade para contribuir com melhorias, correções e novas funcionalidades. Para isso:
