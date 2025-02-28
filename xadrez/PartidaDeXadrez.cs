@@ -121,6 +121,19 @@ namespace xadrez {
                 throw new TabuleiroException("Você não pode se colocar em xeque!");
             }
 
+            Peca p = tab.peca(destino);
+
+            // #JogadaEspecial Promoção
+            if (p is Peao) {
+                if(p.cor == Cor.Branca && destino.linha == 0 || (p.cor == Cor.Preta && destino.linha == 7)) {
+                    p = tab.retirarPeca(destino);
+                    pecas.Remove(p);
+                    Peca dama = new Dama(tab, Cor.Branca);
+                    tab.colocarPeca(dama, destino);
+                    pecas.Add(dama);
+                }
+            }
+
             if (estaEmXeque(adversaria(jogadorAtual))) {
                 xeque = true;
             } else {
@@ -133,8 +146,6 @@ namespace xadrez {
                 turno++;
                 mudaJogador();
             }
-
-            Peca p = tab.peca(destino);
 
             // #JogadaEspecial En Passant
             if (p is Peao && (destino.linha == origem.linha - 2 || destino.linha == origem.linha + 2)) { // Testa se a peça que foi movida é um Peão e se ela andou duas linhas a mais ou a menos (o movimento foi de duas casas) 

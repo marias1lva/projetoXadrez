@@ -95,3 +95,7 @@ namespace xadrez {
 // Se um peão adversário avançar duas casas de sua posição inicial em um único movimento, e parar ao lado do seu peão, você pode capturá-lo como se ele
 // tivesse andado apenas uma casa.
 // A captura só pode ser feita no turno seguinte ao movimento do peão adversário. Se você não capturar o peão adversário imediatamente, perde a oportunidade.
+
+
+// Promoção: é uma regra especial do xadrez que permite que um peão que alcançou a última linha do tabuleiro seja promovido a qualquer outra peça (nesse jogo
+// o peão automaticamente vira uma dama, o jogador não tem chance de escolha).
