@@ -12,6 +12,7 @@ namespace xadrez {
         private HashSet<Peca> pecas;
         private HashSet<Peca> capturadas;
         public bool xeque { get; private set; }
+        public Peca vulneravelEnPassant { get; private set; } // Quando alguém mexer um peão a primeira vez, duas casas, a partida vai armazenar essa peça dizendo que ela está vulnerável a tomar um En Passant no próximo turno
 
         public PartidaDeXadrez() {
             tab = new Tabuleiro(8, 8);
@@ -19,6 +20,7 @@ namespace xadrez {
             jogadorAtual = Cor.Branca;
             terminada = false;
             xeque = false;
+            vulneravelEnPassant = null;
             pecas = new HashSet<Peca>();
             capturadas = new HashSet<Peca>();
             colocarPecas();
@@ -51,6 +53,19 @@ namespace xadrez {
                 tab.colocarPeca(T, destinoT);
             }
 
+            // #JogadaEspecial En Passant
+            if (p is Peao) {
+                if (origem.coluna != destino.coluna && pecaCapturada == null) {
+                    Posicao posP;
+                    if (p.cor == Cor.Branca) { // Se a peça que foi movida é um Peão branco, isso significa que a posição do peão capturado é a de baixo
+                        posP = new Posicao(destino.linha + 1, destino.coluna);
+                    } else { // Se a peça que foi movida é um Peão preto, isso significa que a posição do peão capturado é a de cima
+                        posP = new Posicao(destino.linha - 1, destino.coluna);
+                    }
+                    pecaCapturada = tab.retirarPeca(posP);
+                    capturadas.Add(pecaCapturada);
+                }
+            }
 
             return pecaCapturada;
         }
@@ -81,6 +96,21 @@ namespace xadrez {
                 T.decrementarQteMovimentos();
                 tab.colocarPeca(T, origemT);
             }
+
+            // #JogadaEspecial En Passant
+            if (p is Peao) {
+                if (origem.coluna != destino.coluna && pecaCapturada == vulneravelEnPassant) {
+                    Peca peao = tab.retirarPeca(destino); // Tira o peão que foi movido
+                    Posicao posP; 
+                    if (p.cor == Cor.Branca) { // Se a peça que foi movida é um Peão branco, a posição que o peão preto tem que ser colocado é a linha 3 e a mesma coluna
+                        posP = new Posicao(3, destino.coluna);
+                    }
+                    else { // Se a peça que foi movida é um Peão preto, a posição que o peão branco tem que ser colocado é a linha 4 e a mesma coluna
+                        posP = new Posicao(4, destino.coluna);
+                    }
+                    tab.colocarPeca(peao, posP);
+                }
+            }
         }
 
         public void realizaJogada(Posicao origem, Posicao destino) {
@@ -103,6 +133,16 @@ namespace xadrez {
                 turno++;
                 mudaJogador();
             }
+
+            Peca p = tab.peca(destino);
+
+            // #JogadaEspecial En Passant
+            if (p is Peao && (destino.linha == origem.linha - 2 || destino.linha == origem.linha + 2)) { // Testa se a peça que foi movida é um Peão e se ela andou duas linhas a mais ou a menos (o movimento foi de duas casas) 
+                    vulneravelEnPassant = p;
+            } else {
+                vulneravelEnPassant = null;
+            }
+
         }
 
         public void validarPosicaoDeOrigem(Posicao pos) {
