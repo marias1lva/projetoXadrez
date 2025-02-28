@@ -77,11 +77,11 @@ namespace xadrez {
                 if (posicao.linha == 4) {
                     Posicao esquerda = new Posicao(posicao.linha, posicao.coluna - 1);
                     if (tab.posicaoValida(esquerda) && existeInimigo(esquerda) && tab.peca(esquerda) == partida.vulneravelEnPassant) { // Verifica se na casa da esquerda existe um peão e se ele está vulnerável a tomar um En Passant
-                        mat[esquerda.linha - 1, esquerda.coluna] = true; // Se sim, a posição da matriz é marcada como posição possível para o peão mexer
+                        mat[esquerda.linha + 1, esquerda.coluna] = true; // Se sim, a posição da matriz é marcada como posição possível para o peão mexer
                     }
                     Posicao direita = new Posicao(posicao.linha, posicao.coluna + 1);
                     if (tab.posicaoValida(direita) && existeInimigo(direita) && tab.peca(direita) == partida.vulneravelEnPassant) { // Verifica se na casa da direita existe um peão e se ele está vulnerável a tomar um En Passant
-                        mat[direita.linha - 1, direita.coluna] = true; // Se sim, a posição da matriz é marcada como posição possível para o peão mexer
+                        mat[direita.linha + 1, direita.coluna] = true; // Se sim, a posição da matriz é marcada como posição possível para o peão mexer
                     }
                 }
             }
