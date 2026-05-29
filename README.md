@@ -1,3 +1,129 @@
+# Chess Game in C#
+
+## About the Project
+This is a chess game project developed in C# as part of a study on object-oriented programming (OOP). The main goal was to apply advanced OOP concepts such as encapsulation, inheritance, polymorphism, and abstraction, while implementing a functional and interactive game system — including official chess rules and special moves.
+
+The game follows a layered architecture, organizing the board logic, pieces, and user interaction in a modular and reusable way. It runs in the console and allows two players to alternate turns, enforcing game rules, detecting check and checkmate, and supporting special moves such as Castling, En Passant, and Pawn Promotion.
+
+## Tech Stack
+- Language: C#
+- Paradigm: Object-Oriented Programming (OOP)
+- Data Structures: Matrices, Sets
+- Exception Handling
+
+## Implemented Features
+
+### Board Structure
+- `Position` class to represent board coordinates.
+- Matrix-based representation of board squares.
+- `Board` class with methods to manage pieces and positions.
+
+### Chess Pieces
+- Individual classes for each piece (King, Rook, Bishop, Knight, Queen, Pawn).
+- Inheritance to reuse code and define shared behavior across all pieces.
+- Movement rules defined for each piece type.
+
+### Game Mechanics
+- Turn system allowing players to alternate moves.
+- Validation to prevent illegal moves.
+- Piece capture control.
+- Check and checkmate detection logic.
+
+### Special Moves
+- **Kingside and Queenside Castling:** Special movement involving the king and rook.
+- **En Passant:** Special pawn capture.
+- **Promotion:** Pawn transformation upon reaching the last rank.
+
+## How to Play
+1. Clone the repository to your machine:
+```bash
+git clone https://github.com/marias1lva/projetoXadrez.git
+```
+2. Open the project in a C#-compatible IDE (e.g. Visual Studio, VS Code).
+3. Build and run the program.
+4. Follow the terminal instructions to play.
+
+## Example Gameplay
+
+The game starts by displaying the board and prompting the player to choose a piece to move — entering the origin position, pressing Enter, then entering the destination.
+
+```bash
+Initial board position:
+8 |R N B Q K B N R
+7 |P P P P P P P P
+6 |- - - - - - - -
+5 |- - - - - - - -
+4 |- - - - - - - -
+3 |- - - - - - - -
+2 |P P P P P P P P
+1 |R N B Q K B N R
+   ---------------
+   a b c d e f g h
+
+Captured pieces:
+White: []
+Black: []
+
+Turn: 1
+Waiting for move: White
+
+Origin: e2
+(Enter)
+Destination: e4
+
+
+Board after player input:
+
+8 |R N B Q K B N R
+7 |P P P P P P P P
+6 |- - - - - - - -
+5 |- - - - - - - -
+4 |- - - - P - - -
+3 |- - - - - - - -
+2 |P P P P - P P P
+1 |R N B Q K B N R
+   ---------------
+   a b c d e f g h
+
+Captured pieces:
+White: []
+Black: []
+
+Turn: 2
+Waiting for move: Black
+
+Origin:
+(Enter)
+Destination:
+```
+
+### Player Input
+- Enter origin and destination coordinates when prompted.
+- **Supported notation:** a1–h8
+- **Example:**
+```bash
+Origin: e2
+Destination: e4  (moves a pawn from e2 to e4)
+```
+
+## Error Messages
+- **"There is already a piece in that position!"** → The player attempted to move to a square occupied by a friendly piece. You cannot capture your own pieces.
+- **"Invalid position!"** → The coordinate is out of bounds (e.g. i5 or a0) or does not follow the correct format.
+- **"You cannot put yourself in check!"** → The move would leave the player's own king in check, which is forbidden by chess rules.
+- **"There is no piece at the chosen origin position!"** → The player attempted to move from an empty square, likely due to a typo in the coordinate.
+- **"The chosen piece does not belong to you!"** → The player attempted to move the opponent's piece. You may only move your own pieces.
+- **"There are no possible moves for the chosen piece!"** → The selected piece has no legal moves available due to game rules or blockage by other pieces.
+- **"Invalid destination position!"** → The selected piece cannot move to the given destination according to chess movement rules.
+- **"There is no (White or Black) King on the board!"** → The game detected that one of the kings is missing from the board, indicating a state error or a bug in the capture logic.
+
+## Contributing
+Contributions are welcome! To get started:
+- Fork the repository.
+- Create a new branch with your changes.
+- Open a pull request for review.
+
+----
+
 # Jogo de Xadrez em C#
 
 ## Sobre o Projeto
